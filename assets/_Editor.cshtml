@@ -1,0 +1,38 @@
+﻿<div class="overlay" data-bind="visible: editingTodo">
+    <form action="#" data-bind="validate: validationRules, with: editingTodo">
+        <fieldset>
+            <legend>Todo</legend>
+
+            <p data-bind="visible: Id">
+                Id:
+                <strong data-bind="text: Id"></strong>
+            </p>
+            <p>
+                Title: 
+                <input name="Title" data-bind="value: Title, autovalidate: true" />
+                <span class="error" data-bind="text: Title.ValidationError"></span>
+            </p>
+            <p>
+                Note: 
+                <input name="Note" data-bind="value: Note, autovalidate: true" />
+                <span class="error" data-bind="text: Note.ValidationError"></span>
+            </p>
+            <p>
+                Hour: 
+                <input name="Hour" data-bind="value: Hour, autovalidate: true" />
+                <span class="error" data-bind="text: Hour.ValidationError"></span>
+            </p>
+            <p>
+                IsDone: 
+                <input name="IsDone" type="checkbox" data-bind="checked: IsDone, autovalidate: true" />
+                <span class="error" data-bind="text: IsDone.ValidationError"></span>
+            </p>
+            <p>
+                <button type="submit">OK</button>
+                <a href="#" data-bind="click: $parent.rejectEdit, visible: IsChanged">Undo changes</a>
+                <a href="#" data-bind="click: $parent.deleteCurrentTodo, visible: CanDelete">Delete</a>
+            </p>
+        </fieldset>
+    </form>
+</div>
+

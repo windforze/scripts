@@ -1,0 +1,28 @@
+﻿<h2>Todoes (<span data-bind="text: todoes().length"></span>)</h2>
+
+<table>
+    <thead>
+        <tr>
+             <th>Id</th>
+             <th>Title</th>
+             <th>Note</th>
+             <th>Hour</th>
+             <th>IsDone</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: todoes">
+        <tr data-bind="css: { added: IsAdded, updated: IsUpdated, deleted: IsDeleted, error: EntityError }">
+            <td data-bind="text: Id"></td>
+            <td data-bind="text: Title"></td>
+            <td data-bind="text: Note"></td>
+            <td data-bind="text: Hour"></td>
+            <td data-bind="text: IsDone"></td>
+            <td><a href="#" data-bind="click: $parent.openEditor">Edit</a></td>
+        </tr>
+    </tbody>
+</table>
+
+<p><a href="#" data-bind="click: createTodo">Create new</a></p>
+<button data-bind="click: saveAll">Save all</button>
+<button data-bind="click: revertAll">Revert all</button>
+

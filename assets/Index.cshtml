@@ -1,0 +1,76 @@
+@using Site.Controllers
+@section featured {
+@*<section class="featured">
+	<div class="content-wrapper">
+		<hgroup class="title">
+			<h1>Welcome to my Single Page Application</h1>
+		</hgroup>
+	</div>
+</section>*@
+}
+
+@(Html.UpshotContext(bufferChanges: true).DataSource<DataServiceController>(x => x.GetTodoListForToday()))
+@*@(Html.UpshotContext(bufferChanges: true).DataSource<DataServiceController>(x => x.GetScheduleForToday()))*@
+@(Html.UpshotContext(bufferChanges: true).DataSource<DataServiceController>(x => x.GetDailySchedule()))
+
+<div id="container">
+	
+	<div id="A">
+		<p>
+		<label><input data-bind="checked: excludeDone" type="checkbox"/> Hide done items</label>
+		<a class="actions" herf="#" data-bind="click: saveAll">Save all</a>
+		<a class="actions" herf="#" data-bind="click: revertAll">Revert all</a>
+		</p>
+
+		<ol  data-bind="foreach: todolist">
+			<li data-bind="css: { delivered: IsDone, updated: IsUpdated }">
+				<input placeholder="" class="title" type="text" data-bind="value: Title" />        
+				<input data-bind="checked: IsDone" type="checkbox"/>
+				<strong data-bind="text: Hour"></strong>
+				@*<input class="note" type="text" data-bind="value: Note" />*@
+		
+			</li>
+		</ol>
+	</div>
+	<div id="B">
+		<h2>Memo</h2>    
+		<div id="memo" data-bind="foreach: dailySchedule">			   
+			<div data-bind="css: {updated: IsUpdated }">			                  
+				<textarea id="message" name="message" style="resize: none; overflow-y: hidden; " data-bind="value: Memo"></textarea>
+			</div>
+		</div>
+		<p>
+			<a class="actions" herf="#" data-bind="click: saveAll">Save all</a>
+			<a class="actions" herf="#" data-bind="click: revertAll">Revert all</a>
+		</p>
+			<p>
+				@Html.ActionLink("Logoff", "Logoff", "Account")
+			</p>
+			<p>
+				&copy; @DateTime.Now.Year - Babybi.net
+			</p>
+	</div>
+
+</div>
+<script src="~/Scripts/App/TodolistViewModel.js" type="text/javascript"></script>
+<script type="text/javascript">
+	var ko1;
+	var ko2;
+	$(function () {
+		ko1 = new TodolistViewModel();
+		ko2 = new DailyScheduleViewModel();
+		
+		ko.applyBindings(ko1, $("#A")[0]);
+		ko.applyBindings(ko2, $("#B")[0]);
+	});
+	
+	function SaveAll() {
+		ko1.dataSource.commitChanges();
+		ko2.dataSource.commitChanges();
+	}
+
+	function RevertAll() {
+		ko1.dataSource.revertChanges();
+		ko2.dataSource.revertChanges();
+	}
+</script>
